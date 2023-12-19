@@ -86,21 +86,6 @@ PolarizationVector = cell(3,2); % input x,y; output x,y,z
 % definition aperture
 ApertureMask = double((XPupil.^2+YPupil.^2)<1.0);
 
-% aplanatic amplitude factor
-% combining this factor with the Fresnel-coefficient factors T_{p} and T_{s}
-% the amplitude scales as [sqrt(cos(theta_imm))/(cos(theta_med))] x T_{p,s}
-% where T_{p} = T_{p,med->cov} x T_{p,cov->imm}
-% and T_{s} = T_{s,med->cov} x T_{s,cov->imm}
-% with T_{p,med->cov} = 2*ref_med*cos(theta_med)/[ref_med*cos(theta_cov)+ref_cov*cos(theta_med)]
-% and T_{s,med->cov} = 2*ref_med*cos(theta_med)/[ref_med*cos(theta_med)+ref_cov*cos(theta_cov)]
-% in case of index matching the overall amplitude scaling is with
-% [1/sqrt(cos(theta_med))] x T_{p,s}
-% as the code previously expressed
-% bug correction 20180402
-% 
-% NOTES MSiemons 20180409
-% Implementation actually scaled as [sqrt(cos(theta_imm))./(refmed*cos(theta_med))]x T_{p,s}.
-% Now all amplitude factors are added in the line below, for clarity.
 
 Amplitude = ApertureMask.*sqrt(CosThetaImm)./(refmed*CosThetaMed);
 
